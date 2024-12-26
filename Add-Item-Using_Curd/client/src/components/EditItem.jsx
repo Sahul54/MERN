@@ -4,43 +4,44 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './EditItem.css';
 
 const EditItem = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();  // For navigation after update
+  const { id } = useParams(); // Get the item ID from the URL
+  const navigate = useNavigate(); // For navigation after update
+
   const [formData, setFormData] = useState({
     itemName: '',
     price: '',
     description: '',
-    img: null,  // Optional image field
+    img: null, // Optional image field
   });
 
-  // Store the original data to compare with the updated data
-  const [originalData, setOriginalData] = useState(null);
+  const [originalData, setOriginalData] = useState(null); // Store original data for comparison
 
   // Fetch the existing item data for editing
   useEffect(() => {
     const fetchItem = async () => {
       try {
         const { data } = await getItem(id);
-        setOriginalData(data);  // Store original data for validation
+        setOriginalData(data); // Store the original data
         setFormData({
-          itemName: data.itemName,
-          price: data.price,
-          description: data.description,
-          img: null, // No pre-fill for image (optional to update)
+          itemName: data.itemName || '',
+          price: data.price || '',
+          description: data.description || '',
+          img: null, // No pre-fill for the image
         });
       } catch (err) {
         console.error('Error fetching item:', err);
+        alert('Failed to fetch item details.');
       }
     };
 
     fetchItem();
   }, [id]);
 
-  // Handle input change
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'img') {
-      setFormData({ ...formData, img: files[0] });  // For image upload
+      setFormData({ ...formData, img: files[0] }); // Handle file input for images
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -52,7 +53,7 @@ const EditItem = () => {
       formData.itemName !== originalData.itemName ||
       formData.price !== originalData.price ||
       formData.description !== originalData.description ||
-      formData.img !== null // Check if the image has been changed
+      formData.img !== null // Image change is considered
     );
   };
 
@@ -62,7 +63,7 @@ const EditItem = () => {
 
     if (!isFormDataChanged()) {
       alert('Please make at least one change to update the item.');
-      return; // Prevent form submission if no data is changed
+      return; // Prevent submission if no changes were made
     }
 
     const updatedData = new FormData();
@@ -70,14 +71,15 @@ const EditItem = () => {
     updatedData.append('price', formData.price);
     updatedData.append('description', formData.description);
 
-    // Append image if it's updated
+    // Append the image if it was updated
     if (formData.img) {
       updatedData.append('img', formData.img);
     }
 
     try {
-      await updateItem(id, updatedData);  // Use FormData for file uploads
-      navigate('/');  // Navigate to home page after update
+      await updateItem(id, updatedData); // Update the item using the service
+      alert('Item updated successfully!');
+      navigate('/'); // Redirect to the home page
     } catch (err) {
       console.error('Error updating item:', err);
       alert('Failed to update item.');
@@ -86,7 +88,7 @@ const EditItem = () => {
 
   // Back button handler
   const handleBack = () => {
-    navigate('/');  // Navigate to the home page
+    navigate('/'); // Navigate to the home page
   };
 
   return (

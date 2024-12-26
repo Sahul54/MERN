@@ -1,6 +1,7 @@
+// src/services/itemService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5000/api/items';
 
 export const addItem = (formData) => axios.post(`${API_URL}/addItem`, formData);
 export const getItems = () => axios.get(`${API_URL}/getAllItems`);

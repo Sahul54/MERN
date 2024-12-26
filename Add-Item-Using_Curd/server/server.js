@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const authRoutes = require('./routes/authRoutes');
 const itemRoutes = require('./routes/itemRoutes');
 const path = require('path');
 const cors = require('cors');
@@ -19,8 +20,15 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// Connect to database
-connectDB();
+// Connect to database with error handling
+connectDB()
+  .then(() => {
+    console.log('Database connected successfully');
+  })
+  .catch((err) => {
+    console.error('Database connection failed', err);
+    process.exit(1); // Exit the process if database connection fails
+  });
 
 // Middleware
 app.use(express.json()); // Parse incoming JSON data
@@ -29,7 +37,8 @@ app.use(express.json()); // Parse incoming JSON data
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
-app.use('/api', itemRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/items', itemRoutes);
 
 // Error handling for unknown routes
 app.use((req, res, next) => {
@@ -38,7 +47,7 @@ app.use((req, res, next) => {
 
 // Global error handler
 app.use((err, req, res, next) => {
-  console.error(err.message);
+  console.error(err.stack); // Log the stack trace for debugging
   res.status(500).json({ message: 'Internal Server Error' });
 });
 
