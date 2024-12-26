@@ -1,0 +1,79 @@
+.item-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.item-card img {
+  max-width: 120px;
+  max-height: 120px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.item-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.item-card p {
+  font-size: 1rem;
+  color: #555;
+  margin: 5px 0;
+  text-align: center;
+}
+
+.item-card .button-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.item-card .button-container button {
+  padding: 8px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.item-card .button-container .edit-btn {
+  background-color: #24cd45;
+  color: white;
+}
+
+.item-card .button-container .edit-btn:hover {
+  background-color: #09b53f;
+}
+
+.item-card .button-container .delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.item-card .button-container .delete-btn:hover {
+  background-color: #c82333;
+}
+/* Back Button Styling */
+.back-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 10px 0;
+  font-size: 1rem;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
