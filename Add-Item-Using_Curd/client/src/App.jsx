@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ItemList from './components/ItemList';
@@ -11,6 +10,7 @@ import PrivateRoute from './components/PrivateRoute';
 const App = () => {
   return (
     <Router>
+        
       <Routes>
         <Route path="/" element={<PrivateRoute><ItemList /></PrivateRoute>} />
         <Route path="/addItem" element={<PrivateRoute><AddItem /></PrivateRoute>} />

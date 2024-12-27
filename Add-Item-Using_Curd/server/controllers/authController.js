@@ -42,8 +42,6 @@ const signup = async (req, res) => {
   }
 };
 
-// module.exports = { signup };
-
 
 // Login API Route
 const login = async (req, res) => {
